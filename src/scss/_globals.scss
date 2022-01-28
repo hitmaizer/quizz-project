@@ -11,3 +11,10 @@ body {
     background-position-x: right, left;
     background-position-y: top, bottom;
 }
+
+.quiz--wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
