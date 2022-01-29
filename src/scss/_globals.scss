@@ -14,7 +14,18 @@ body {
 
 .quiz--wrapper {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+.quiz--checkbutton {
+    border: none;
+    width: rem(193px);
+    height: rem(52px);
+    border-radius: 16px;
+    background-color: $gray-blue;
+    color: $light-gray;
+    cursor: pointer;
 }
