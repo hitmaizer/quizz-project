@@ -1,13 +1,13 @@
 import React from "react"
+import Intro from "./components/Intro"
 
 export default function App() {
+
+    const [intro, setIntro] = React.useState(true)
+
     return (
         <div className="quiz--wrapper">
-            <div className="intro--wrapper">
-                <h1 className="intro--title">Quizzical</h1>
-                <p className="intro--description">Some description if needed</p>
-                <button className="intro--button">Start Quiz</button>
-            </div>
+            {intro && <Intro />}
         </div>
     )
 }
