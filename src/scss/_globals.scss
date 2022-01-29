@@ -20,6 +20,14 @@ body {
     height: 100vh;
 }
 
+.game--wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .quiz--checkbutton {
     border: none;
     width: rem(193px);
@@ -28,4 +36,5 @@ body {
     background-color: $gray-blue;
     color: $light-gray;
     cursor: pointer;
+    margin-top: 16px;
 }
