@@ -1,35 +1,18 @@
 import React from "react"
 import Intro from "./components/Intro"
 import Card from "./components/Card"
+import { nanoid } from 'nanoid'
 
 export default function App() {
     const [quizData, setQuizData] = React.useState([])
-    const [questions, setQuestions] = React.useState([
-        {
-            category: "",
-            type: "",
-            difficulty: "",
-            question: "",
-            correct_answer: "",
-            incorrect_answers: [
-            "",
-            "",
-            ""
-            ]
-        }
-    ])
+    const [questions, setQuestions] = React.useState([])
 
     const [intro, setIntro] = React.useState(true)
-    
-    
 
     React.useEffect(() => {
-        fetch("https://opentdb.com/api.php?amount=40")
+        fetch("https://opentdb.com/api.php?amount=50&type=multiple")
             .then(res => res.json())
             .then(data => setQuizData(data.results))
-
-             
-            
 
     }, [])
 
@@ -44,20 +27,19 @@ export default function App() {
         
     }
 
-    
-
     function toggleIntro() {
         setIntro(!intro)
         getRandomQuestions()
     }
     
-
-
     console.log(questions)
 
     const cardElements = questions.map(question => 
     <Card 
-       question={question.question} 
+        key={nanoid()}
+        question={question.question}
+        wrong={question.incorrect_answers} 
+        correct={question.correct_answer}
        
     />)
     
@@ -67,13 +49,10 @@ export default function App() {
     return (
         <div className="quiz--wrapper">
             {intro && 
-            
             <Intro 
                 clickHandler={toggleIntro}
             />}
 
-            
-            
             {!intro && 
                 <div className="quiz--wrapper">
                     {cardElements}
