@@ -9,11 +9,17 @@ export default function App() {
     return (
         <div className="quiz--wrapper">
             {intro && <Intro />}
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <button className="quiz--checkbutton">Check answers</button>
+
+            {!intro && 
+            <div className="game--wrapper">
+                <Card />
+                <Card />,
+                <Card />,
+                <Card />,
+                <button className="quiz--checkbutton">Check answers</button>
+            </div>
+            }
+               
         </div>
     )
 }
