@@ -35,6 +35,9 @@
     text-align: center;
     border: .5px solid $dark-blue;
     cursor: pointer;
+    &:active {
+        border: 1px solid $lightest-blue;
+    }
 }
 
 .card--line {
