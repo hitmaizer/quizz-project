@@ -142,6 +142,10 @@ body {
   cursor: pointer;
 }
 
+.card--button:active {
+  border: 1px solid #DBDEF0;
+}
+
 .card--line {
   width: 100%;
   background-color: #DBDEF0;

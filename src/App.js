@@ -23,6 +23,7 @@ export default function App() {
                 const randomQuestion = quizData[randomNumber]
                 newQuestions.push(randomQuestion)
             }
+        
         setQuestions(newQuestions)
         
     }
