@@ -144,6 +144,7 @@ body {
 
 .card--button:active {
   border: 1px solid #DBDEF0;
+  background-color: #D6DBF5;
 }
 
 .card--line {
