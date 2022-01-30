@@ -6,7 +6,8 @@ import { nanoid } from 'nanoid'
 export default function App() {
     const [quizData, setQuizData] = React.useState([])
     const [questions, setQuestions] = React.useState([])
-    const [userAnswers, setUserAnswers] = React.useState([])
+    // const [userAnswers, setUserAnswers] = React.useState([])
+    let answersArr = []
 
     
 
@@ -16,6 +17,10 @@ export default function App() {
         fetch("https://opentdb.com/api.php?amount=50&type=multiple")
             .then(res => res.json())
             .then(data => setQuizData(data.results))
+            
+    
+            
+        
 
     }, [])
 
@@ -26,9 +31,8 @@ export default function App() {
                 const randomQuestion = quizData[randomNumber]
                 
                 // newQuestions.push(randomQuestion)
-                newQuestions.push({...randomQuestion, isSelected: false, id: nanoid()})
+                newQuestions.push({...randomQuestion, isSelected: false, id: nanoid(), userInput: ""})
                 
-                console.log(questions)
                 
             }
         
@@ -43,10 +47,17 @@ export default function App() {
     
     console.log(questions)
 
-    function selectHandler(id, correct) {
-        const answersArr = []
-        answersArr.push(id)
-        setUserAnswers(answersArr)
+    function selectAnswer(id, answer) {
+        setQuestions(oldQuestions => oldQuestions.map(question => {
+            return question.id === id ? {...question, userInput: answer, isSelected: !question.isSelected}:
+            question
+        }))
+        
+    }
+
+   
+
+    function checkAnswers(id, correct) { 
 
         if (id == correct) {
             console.log("correct!")
@@ -54,14 +65,16 @@ export default function App() {
         console.log(`you selected ${id}`)
     }
 
+
     const cardElements = questions.map(question => 
     <Card 
         key={nanoid()}
         question={question.question}
         correct={question.correct_answer}
         wrong={question.incorrect_answers}
-        clickHandler={selectHandler}
-        selected={question.selected}
+        clickHandler={selectAnswer}
+        id={question.id}
+        selected={question.isSelected}
     />)
     
     return (
