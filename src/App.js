@@ -17,10 +17,6 @@ export default function App() {
         fetch("https://opentdb.com/api.php?amount=50&type=multiple")
             .then(res => res.json())
             .then(data => setQuizData(data.results))
-            
-    
-            
-        
 
     }, [])
 
@@ -31,7 +27,7 @@ export default function App() {
                 const randomQuestion = quizData[randomNumber]
                 
                 // newQuestions.push(randomQuestion)
-                newQuestions.push({...randomQuestion, isSelected: false, id: nanoid(), userInput: ""})
+                newQuestions.push({...randomQuestion, questionLabel: randomQuestion.question, isSelected: false, id: nanoid(), userInput: ""})
                 
                 
             }
@@ -51,8 +47,7 @@ export default function App() {
         setQuestions(oldQuestions => oldQuestions.map(question => {
             return question.id === id ? {...question, userInput: answer, isSelected: !question.isSelected}:
             question
-        }))
-        
+        }))   
     }
 
    
@@ -75,6 +70,8 @@ export default function App() {
         clickHandler={selectAnswer}
         id={question.id}
         selected={question.isSelected}
+        userInput={question.userInput}
+        
     />)
     
     return (
