@@ -5,7 +5,7 @@ export default function Card(props) {
     return (
         
         <div className="card--wrapper">
-            <h1 className="card--question">{props.question}</h1>
+            <h1 className="card--question" dangerouslySetInnerHTML={{ __html: props.question}}/>
             <div className="card--answers">
                 <button className="card--button">{props.correct}</button>
                 <button className="card--button">{props.wrong[2]}</button>
