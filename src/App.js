@@ -8,6 +8,8 @@ export default function App() {
     const [questions, setQuestions] = React.useState([])
     const [userAnswers, setUserAnswers] = React.useState([])
 
+    
+
     const [intro, setIntro] = React.useState(true)
 
     React.useEffect(() => {
@@ -22,7 +24,12 @@ export default function App() {
             for (let i = 0; i < 4; i++) {
                 const randomNumber = Math.floor(Math.random() * quizData.length)
                 const randomQuestion = quizData[randomNumber]
-                newQuestions.push(randomQuestion)
+                
+                // newQuestions.push(randomQuestion)
+                newQuestions.push({...randomQuestion, isSelected: false, id: nanoid()})
+                
+                console.log(questions)
+                
             }
         
         setQuestions(newQuestions)
@@ -36,8 +43,14 @@ export default function App() {
     
     console.log(questions)
 
-    function selectHandler(id) {
-        
+    function selectHandler(id, correct) {
+        const answersArr = []
+        answersArr.push(id)
+        setUserAnswers(answersArr)
+
+        if (id == correct) {
+            console.log("correct!")
+        }
         console.log(`you selected ${id}`)
     }
 
@@ -45,14 +58,12 @@ export default function App() {
     <Card 
         key={nanoid()}
         question={question.question}
-        wrong={question.incorrect_answers} 
         correct={question.correct_answer}
+        wrong={question.incorrect_answers}
         clickHandler={selectHandler}
+        selected={question.selected}
     />)
     
-        
-    
-
     return (
         <div className="quiz--wrapper">
             {intro && 
