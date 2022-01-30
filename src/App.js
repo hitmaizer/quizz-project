@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid'
 export default function App() {
     const [quizData, setQuizData] = React.useState([])
     const [questions, setQuestions] = React.useState([])
+    const [userAnswers, setUserAnswers] = React.useState([])
 
     const [intro, setIntro] = React.useState(true)
 
@@ -35,16 +36,21 @@ export default function App() {
     
     console.log(questions)
 
+    function selectHandler(id) {
+        
+        console.log(`you selected ${id}`)
+    }
+
     const cardElements = questions.map(question => 
     <Card 
         key={nanoid()}
         question={question.question}
         wrong={question.incorrect_answers} 
         correct={question.correct_answer}
-       
+        clickHandler={selectHandler}
     />)
     
-
+        
     
 
     return (
