@@ -37,6 +37,7 @@
     cursor: pointer;
     &:active {
         border: 1px solid $lightest-blue;
+        background-color: $light-blue;
     }
 }
 
