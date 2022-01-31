@@ -3,56 +3,88 @@ import { nanoid } from "nanoid"
 
 
 export default function Card(props) {
-    let shuffledAnswers = [props.correct, ...props.wrong]
-    const [isActive, setActive] = React.useState(false)
+    // let shuffledAnswers = [props.correct, ...props.wrong]
+    
     React.useEffect(() => {
-        let shuffledAnswers = [props.correct, ...props.wrong].sort(() => Math.random() - 0.5)
+        // let shuffledAnswers = [props.correct, ...props.wrong].sort(() => Math.random() - 0.5)
         
     },[])
 
-    const toggleClass = () => {
-        setActive(!isActive)
-    }
-
-    /* function setAnswers() {
-        const newArr = []
-        newArr.push(shuffledAnswers.map(item => {
-            return {...item, id: nanoid()}
-        }))
-        setAnswerElements(newArr)
-    } */
     
-    /* const answerElements = shuffledAnswers.map(item => 
-    <button className="card--button" 
-        key={nanoid()}
-        id={nanoid()}
-        dangerouslySetInnerHTML={{ __html: item}}
-        
-    />) */
+    
+    const answerStyles = {
+        firstUnchecked: {
+            cursor: "pointer"
+        },
+        firstChecked: {
+            border: "none",
+            backgroundColor: "#D6DBF5",
+            cursor: "pointer"
+        },
+        secondCorrect: {
+            border: "none",
+            backgroundColor: "#94D7A2",
+            outline: "none"
 
-    // console.log(answerElements)
+        },
+        secondUncorrect: {
+            border: "none",
+            backgroundColor: "#F8BCBC",
+            opacity: "0.5",
+            outline: "none"
+            
+        },
+        secondUnchecked: {
+            opacity: "0.5",
+            outline: "none"
+            
+        }
+    } 
+    
+    
+
+    const answerElements = props.allAnswers.map(item => {
+        let obj = {}
+        if (props.intro === false) {
+            obj = (item === props.userInput) ? 
+            {
+                style: {...answerStyles.firstChecked},
+                onClick: () => {props.clickHandler(props.id, item)}
+            } :
+            {
+                style: {...answerStyles.firstUnchecked},
+                onClick: () => {props.clickHandler(props.id, item)}
+            }
+        }
+        return (<button 
+            key={item} 
+            className="card--button" 
+            dangerouslySetInnerHTML={ {__html: item} } 
+            {...obj} 
+        />)
+
+    })
 
     
-    const styles = { backgroundColor: props.selected ? "#D6DBF5" : "#fff"}
-    
+
     return (
         
         <div className="card--wrapper">
             <h1 className="card--question" dangerouslySetInnerHTML={{ __html: props.question}}/>
             <div className="card--answers">
+                {answerElements}
                 
-                {/* {answerElements} */}
-                <button className={isActive ? "active card--button" : "card--button"} onClick={toggleClass} 
+                {/* <button className="card--button" onClick={() => props.clickHandler(props.id, shuffledAnswers[0], buttons)} 
                 dangerouslySetInnerHTML={{ __html: shuffledAnswers[0]}}/>
-                <button className="card--button" style={styles} onClick={() => props.clickHandler(props.id, shuffledAnswers[1])} 
+                <button className="card--button" onClick={() => props.clickHandler(props.id, shuffledAnswers[1], buttons)} 
                 dangerouslySetInnerHTML={{ __html: shuffledAnswers[1]}}/>
-                <button className="card--button" style={styles} onClick={() => props.clickHandler(props.id, shuffledAnswers[2])} 
+                <button className="card--button" onClick={() => props.clickHandler(props.id, shuffledAnswers[2], buttons)} 
                 dangerouslySetInnerHTML={{ __html: shuffledAnswers[2]}}/>
-                <button className="card--button" style={styles} onClick={() => props.clickHandler(props.id, shuffledAnswers[3])} 
-                dangerouslySetInnerHTML={{ __html: shuffledAnswers[3]}}/> 
+                <button className="card--button" onClick={() => props.clickHandler(props.id, shuffledAnswers[3], buttons)} 
+                dangerouslySetInnerHTML={{ __html: shuffledAnswers[3]}}/> */} 
                 
             </div>
-            <hr className="card--line" onClick={() => props.clickHandler(props.id, shuffledAnswers)}/>
+            <hr className="card--line"/>
         </div>
     )
 }

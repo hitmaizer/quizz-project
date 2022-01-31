@@ -6,12 +6,14 @@ import { nanoid } from 'nanoid'
 export default function App() {
     const [quizData, setQuizData] = React.useState([])
     const [questions, setQuestions] = React.useState([])
-    // const [userAnswers, setUserAnswers] = React.useState([])
-    let answersArr = []
+    const [isActive, setActive] = React.useState(false)
+    
+    
 
     
 
     const [intro, setIntro] = React.useState(true)
+    
 
     React.useEffect(() => {
         fetch("https://opentdb.com/api.php?amount=50&type=multiple")
@@ -27,7 +29,7 @@ export default function App() {
                 const randomQuestion = quizData[randomNumber]
                 
                 // newQuestions.push(randomQuestion)
-                newQuestions.push({...randomQuestion, questionLabel: randomQuestion.question, isSelected: false, id: nanoid(), userInput: ""})
+                newQuestions.push({...randomQuestion, allAnswers: [...randomQuestion.incorrect_answers, randomQuestion.correct_answer], questionLabel: randomQuestion.question, isSelected: false, id: nanoid(), userInput: ""})
                 
                 
             }
@@ -36,14 +38,21 @@ export default function App() {
         
     }
 
+    const toggleClass = () => {
+        setActive(!isActive)
+        
+    }
+    
+
     function toggleIntro() {
         setIntro(!intro)
         getRandomQuestions()
     }
     
-    console.log(questions)
+    // console.log(questions)
 
     function selectAnswer(id, answer) {
+       
         setQuestions(oldQuestions => oldQuestions.map(question => {
             return question.id === id ? {...question, userInput: answer, isSelected: !question.isSelected}:
             question
@@ -71,6 +80,9 @@ export default function App() {
         id={question.id}
         selected={question.isSelected}
         userInput={question.userInput}
+        allAnswers={question.allAnswers}
+        intro={intro}
+        
         
     />)
     
