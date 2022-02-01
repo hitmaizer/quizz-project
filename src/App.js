@@ -59,7 +59,6 @@ export default function App() {
             // verificar quantas vezes o userInput === correct_answer
             if (question.userInput === question.correct_answer) {
                 // adicionar 1 por cada vez que truth
-                console.log(question)
                 result++
             }
         }
