@@ -6,18 +6,13 @@ import { nanoid } from 'nanoid'
 export default function App() {
     const [quizData, setQuizData] = React.useState([])
     const [questions, setQuestions] = React.useState([])
-    const [isActive, setActive] = React.useState(false)
+    
     const [intro, setIntro] = React.useState(0)
-
-    
-    
 
     React.useEffect(() => {
         fetch("https://opentdb.com/api.php?amount=50&type=multiple")
             .then(res => res.json())
-            .then(data => setQuizData(data.results))
-
-        
+            .then(data => setQuizData(data.results))   
 
     }, [])
 
@@ -29,20 +24,13 @@ export default function App() {
                 const randomQuestion = quizData[randomNumber]
                 
                 // newQuestions.push(randomQuestion)
-                newQuestions.push({...randomQuestion, allAnswers: [...randomQuestion.incorrect_answers, randomQuestion.correct_answer], questionLabel: randomQuestion.question, isSelected: false, id: nanoid(), userInput: ""})
+                newQuestions.push({...randomQuestion, allAnswers: [...randomQuestion.incorrect_answers, randomQuestion.correct_answer], id: nanoid(), userInput: ""})
                 
             }
         
-        setQuestions(newQuestions)
-         
-        
-        
+        setQuestions(newQuestions)    
     }
 
-    const toggleClass = () => {
-        setActive(!isActive)
-        
-    }
     
 
     function toggleIntro() {
@@ -55,15 +43,13 @@ export default function App() {
     }
     
     
-
     function selectAnswer(id, answer) {
        
         setQuestions(oldQuestions => oldQuestions.map(question => {
-            return question.id === id ? {...question, userInput: answer, isSelected: !question.isSelected}:
+            return question.id === id ? {...question, userInput: answer}:
             question
         }))   
     }
-    
     
     function checkAnswers() { 
         // criar uma variante de resultado
@@ -77,12 +63,10 @@ export default function App() {
                 result++
             }
         }
-        return result
-        
+        return result    
     }
 
     
-
     function checkResult() {
         setIntro(2)
     }
@@ -92,16 +76,11 @@ export default function App() {
         key={nanoid()}
         question={question.question}
         correct={question.correct_answer}
-        wrong={question.incorrect_answers}
         clickHandler={selectAnswer}
         id={question.id}
-        selected={question.isSelected}
         userInput={question.userInput}
         allAnswers={question.allAnswers}
-        intro={intro}
-        
-        
-        
+        intro={intro}    
     />)
     
     //console.log(questions)
