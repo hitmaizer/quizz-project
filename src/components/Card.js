@@ -4,12 +4,7 @@ import React from "react"
 
 export default function Card(props) {
     const shuffledAnswers = [...props.allAnswers]
-    
-    
-    React.useEffect(() => {
-        shuffledAnswers.sort(() => Math.random() - 0.5)
-        
-    },[])
+
 
     
     
@@ -45,7 +40,7 @@ export default function Card(props) {
     
     
     
-    const answerElements = props.allAnswers.map(item => {
+    const answerElements = shuffledAnswers.map(item => {
         let obj = {}
         
         if (props.intro === 1) {
