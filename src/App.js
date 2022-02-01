@@ -2,6 +2,7 @@ import React from "react"
 import Intro from "./components/Intro"
 import Card from "./components/Card"
 import { nanoid } from 'nanoid'
+import Confetti from 'react-confetti'
 
 export default function App() {
     const [quizData, setQuizData] = React.useState([])
@@ -12,9 +13,27 @@ export default function App() {
     React.useEffect(() => {
         fetch("https://opentdb.com/api.php?amount=50&type=multiple")
             .then(res => res.json())
-            .then(data => setQuizData(data.results))   
+            .then(data => setQuizData(data.results))
+        
+            
+            
 
     }, [])
+
+    function shuffle(oldAnswers) {
+        let array = oldAnswers
+        let currentIndex = array.length,  randomIndex;
+        // While there remain elements to shuffle...
+        while (currentIndex !== 0) {
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
 
     function getRandomQuestions() {
 
@@ -24,7 +43,7 @@ export default function App() {
                 const randomQuestion = quizData[randomNumber]
                 
                 // newQuestions.push(randomQuestion)
-                newQuestions.push({...randomQuestion, allAnswers: [...randomQuestion.incorrect_answers, randomQuestion.correct_answer], id: nanoid(), userInput: ""})
+                newQuestions.push({...randomQuestion, allAnswers: shuffle([...randomQuestion.incorrect_answers, randomQuestion.correct_answer]), id: nanoid(), userInput: ""})
                 
             }
         
@@ -100,6 +119,7 @@ export default function App() {
             
             {intro === 2 &&
                 <div className="quiz--wrapper">
+                    <Confetti />
                     {cardElements}
                     <h1 className="intro--title">You scored {checkAnswers()}/4!</h1>
                     <button className="quiz--checkbutton" onClick={newGame}> Play again!</button>
