@@ -12,6 +12,7 @@ export default function Card(props) {
 
     
     
+    
     const answerStyles = {
         firstUnchecked: {
             cursor: "pointer"
@@ -42,10 +43,11 @@ export default function Card(props) {
     } 
     
     
-
+    
     const answerElements = props.allAnswers.map(item => {
         let obj = {}
-        if (props.intro === false) {
+        
+        if (props.intro === 1) {
             obj = (item === props.userInput) ? 
             {
                 style: {...answerStyles.firstChecked},
