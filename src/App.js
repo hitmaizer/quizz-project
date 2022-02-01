@@ -66,18 +66,26 @@ export default function App() {
     
     
     function checkAnswers() { 
-        // criar um novo de array de resultados
+        // criar uma variante de resultado
+        let result = 0
         // percorrer o array das questions 
-        // verificar quantas vezes o userInput === correct_answer
-        // 
-        
-        setIntro(2)
-        /* if (id == correct) {
-            console.log("correct!")
+        for (let question of questions) {
+            // verificar quantas vezes o userInput === correct_answer
+            if (question.userInput === question.correct_answer) {
+                // adicionar 1 por cada vez que truth
+                console.log(question)
+                result++
+            }
         }
-        console.log(`you selected ${id}`) */
+        return result
+        
     }
 
+    
+
+    function checkResult() {
+        setIntro(2)
+    }
 
     const cardElements = questions.map(question => 
     <Card 
@@ -96,7 +104,7 @@ export default function App() {
         
     />)
     
-    console.log(questions)
+    //console.log(questions)
 
     return (
         <div className="quiz--wrapper">
@@ -108,14 +116,14 @@ export default function App() {
             {intro === 1 && 
                 <div className="quiz--wrapper">
                     {cardElements}
-                    <button className="quiz--checkbutton" onClick={checkAnswers}>Check answers</button>
+                    <button className="quiz--checkbutton" onClick={() => checkResult()}>Check answers</button>
                 </div>
             }
             
             {intro === 2 &&
-                <div>
-                    <h1>You scored x amount</h1>
-                    <button className="quiz--checkbutton" onClick={newGame}> Playagain!</button>
+                <div className="quiz--wrapper">
+                    <h1 className="intro--title">You scored {checkAnswers()}/4!</h1>
+                    <button className="quiz--checkbutton" onClick={newGame}> Play again!</button>
                 </div>
             }
             
@@ -123,3 +131,7 @@ export default function App() {
         </div>
     )
 }
+
+// check results --
+// shuffle the possible answers
+// style after results
