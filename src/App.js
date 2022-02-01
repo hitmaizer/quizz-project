@@ -7,12 +7,9 @@ export default function App() {
     const [quizData, setQuizData] = React.useState([])
     const [questions, setQuestions] = React.useState([])
     const [isActive, setActive] = React.useState(false)
-    
-    
+    const [intro, setIntro] = React.useState(0)
 
     
-
-    const [intro, setIntro] = React.useState(true)
     
 
     React.useEffect(() => {
@@ -20,9 +17,12 @@ export default function App() {
             .then(res => res.json())
             .then(data => setQuizData(data.results))
 
+        
+
     }, [])
 
     function getRandomQuestions() {
+
         const newQuestions = []
             for (let i = 0; i < 4; i++) {
                 const randomNumber = Math.floor(Math.random() * quizData.length)
@@ -31,10 +31,11 @@ export default function App() {
                 // newQuestions.push(randomQuestion)
                 newQuestions.push({...randomQuestion, allAnswers: [...randomQuestion.incorrect_answers, randomQuestion.correct_answer], questionLabel: randomQuestion.question, isSelected: false, id: nanoid(), userInput: ""})
                 
-                
             }
         
         setQuestions(newQuestions)
+         
+        
         
     }
 
@@ -45,11 +46,15 @@ export default function App() {
     
 
     function toggleIntro() {
-        setIntro(!intro)
+        setIntro(1)
         getRandomQuestions()
     }
+
+    function newGame() {
+        setIntro(0)
+    }
     
-    // console.log(questions)
+    
 
     function selectAnswer(id, answer) {
        
@@ -58,15 +63,19 @@ export default function App() {
             question
         }))   
     }
-
-   
-
-    function checkAnswers(id, correct) { 
-
-        if (id == correct) {
+    
+    
+    function checkAnswers() { 
+        // criar um novo de array de resultados
+        // percorrer o array das questions 
+        // verificar quantas vezes o userInput === correct_answer
+        // 
+        
+        setIntro(2)
+        /* if (id == correct) {
             console.log("correct!")
         }
-        console.log(`you selected ${id}`)
+        console.log(`you selected ${id}`) */
     }
 
 
@@ -84,19 +93,29 @@ export default function App() {
         intro={intro}
         
         
+        
     />)
     
+    console.log(questions)
+
     return (
         <div className="quiz--wrapper">
-            {intro && 
+            {intro === 0 && 
             <Intro 
                 clickHandler={toggleIntro}
             />}
 
-            {!intro && 
+            {intro === 1 && 
                 <div className="quiz--wrapper">
                     {cardElements}
-                    <button className="quiz--checkbutton">Check answers</button>
+                    <button className="quiz--checkbutton" onClick={checkAnswers}>Check answers</button>
+                </div>
+            }
+            
+            {intro === 2 &&
+                <div>
+                    <h1>You scored x amount</h1>
+                    <button className="quiz--checkbutton" onClick={newGame}> Playagain!</button>
                 </div>
             }
             
