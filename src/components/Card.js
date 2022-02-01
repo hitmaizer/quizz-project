@@ -1,12 +1,13 @@
 import React from "react"
-import { nanoid } from "nanoid"
+
 
 
 export default function Card(props) {
-    // let shuffledAnswers = [props.correct, ...props.wrong]
+    const shuffledAnswers = [...props.allAnswers]
+    
     
     React.useEffect(() => {
-        // let shuffledAnswers = [props.correct, ...props.wrong].sort(() => Math.random() - 0.5)
+        shuffledAnswers.sort(() => Math.random() - 0.5)
         
     },[])
 
@@ -26,7 +27,7 @@ export default function Card(props) {
             border: "none",
             backgroundColor: "#94D7A2",
             outline: "none"
-            
+
         },
         secondUncorrect: {
             border: "none",
@@ -39,20 +40,8 @@ export default function Card(props) {
             opacity: "0.5",
             outline: "none"
             
-        },
-        
-        selectedCorrect: {
-            backgroundColor: "#94D7A2",
-            outline: "none",
-            border: "1px solid black"
-        },
-
-        selectedUncorrect: {
-            backgroundColor: "#F8BCBC",
-            outline: "none",
-            border: "1px solid black"
         }
-    } 
+    }
     
     
     
@@ -60,31 +49,33 @@ export default function Card(props) {
         let obj = {}
         
         if (props.intro === 1) {
-            obj = (item === props.userInput) ? 
-            {
+            obj = (item === props.userInput) 
+            ? {
                 style: {...answerStyles.firstChecked},
                 onClick: () => {props.clickHandler(props.id, item)}
-            } :
-            {
+            } 
+            :{
                 style: {...answerStyles.firstUnchecked},
                 onClick: () => {props.clickHandler(props.id, item)}
             }
-        } else if (props.intro === 2){
-            obj = (item === props.correct) ? 
-            {
-                style: {...answerStyles.secondCorrect}
-                
-            }:
-            {
-                style: {...answerStyles.secondUncorrect}
-                
-            } 
-        } 
+        } else if (props.intro === 2) {
+            if (item === props.correct){
+                obj = {
+                    style: {...answerStyles.secondCorrect}
+                }
+            } else if (item === props.userInput) {
+                obj = {
+                    style: {...answerStyles.secondUncorrect}
+                }
+            } else {
+                obj = {
+                    style: {...answerStyles.secondUnchecked}
+                }
+            }
+        }
+    
+    
 
-        
-
-        
-        
         return (<button 
             key={item} 
             className="card--button" 
@@ -101,17 +92,7 @@ export default function Card(props) {
         <div className="card--wrapper">
             <h1 className="card--question" dangerouslySetInnerHTML={{ __html: props.question}}/>
             <div className="card--answers">
-                {answerElements}
-                
-                {/* <button className="card--button" onClick={() => props.clickHandler(props.id, shuffledAnswers[0], buttons)} 
-                dangerouslySetInnerHTML={{ __html: shuffledAnswers[0]}}/>
-                <button className="card--button" onClick={() => props.clickHandler(props.id, shuffledAnswers[1], buttons)} 
-                dangerouslySetInnerHTML={{ __html: shuffledAnswers[1]}}/>
-                <button className="card--button" onClick={() => props.clickHandler(props.id, shuffledAnswers[2], buttons)} 
-                dangerouslySetInnerHTML={{ __html: shuffledAnswers[2]}}/>
-                <button className="card--button" onClick={() => props.clickHandler(props.id, shuffledAnswers[3], buttons)} 
-                dangerouslySetInnerHTML={{ __html: shuffledAnswers[3]}}/> */} 
-                
+                {answerElements} 
             </div>
             <hr className="card--line"/>
         </div>
