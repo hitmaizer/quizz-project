@@ -26,7 +26,7 @@ export default function Card(props) {
             border: "none",
             backgroundColor: "#94D7A2",
             outline: "none"
-
+            
         },
         secondUncorrect: {
             border: "none",
@@ -39,6 +39,18 @@ export default function Card(props) {
             opacity: "0.5",
             outline: "none"
             
+        },
+        
+        selectedCorrect: {
+            backgroundColor: "#94D7A2",
+            outline: "none",
+            border: "1px solid black"
+        },
+
+        selectedUncorrect: {
+            backgroundColor: "#F8BCBC",
+            outline: "none",
+            border: "1px solid black"
         }
     } 
     
@@ -57,7 +69,22 @@ export default function Card(props) {
                 style: {...answerStyles.firstUnchecked},
                 onClick: () => {props.clickHandler(props.id, item)}
             }
-        }
+        } else if (props.intro === 2){
+            obj = (item === props.correct) ? 
+            {
+                style: {...answerStyles.secondCorrect}
+                
+            }:
+            {
+                style: {...answerStyles.secondUncorrect}
+                
+            } 
+        } 
+
+        
+
+        
+        
         return (<button 
             key={item} 
             className="card--button" 
