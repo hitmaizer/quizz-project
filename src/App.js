@@ -122,6 +122,7 @@ export default function App() {
             
             {intro === 2 &&
                 <div className="quiz--wrapper">
+                    {cardElements}
                     <h1 className="intro--title">You scored {checkAnswers()}/4!</h1>
                     <button className="quiz--checkbutton" onClick={newGame}> Play again!</button>
                 </div>
@@ -134,4 +135,4 @@ export default function App() {
 
 // check results --
 // shuffle the possible answers
-// style after results
+// style after results -- 
